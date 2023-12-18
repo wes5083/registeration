@@ -18,17 +18,18 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tokens", indexes = {
-        @Index(name = "index_tokens_email", columnList = "email")
+        @Index(name = "index_tokens_email", columnList = "email"),
+        @Index(name = "index_tokens_token", columnList = "token", unique = true)
 })
 public class Token implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "token", unique = true, length = 100)
+    @Column(name = "token", nullable = false, length = 200)
     private String token;
 
-    @Column(name = "email", length = 100)
+    @Column(name = "email", nullable = false, length = 100)
     private String email;
 
     @Column(name = "last_see_at", nullable = false)

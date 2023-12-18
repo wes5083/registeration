@@ -1,40 +1,45 @@
 package com.finnplay.controller;
 
 import com.finnplay.service.UserService;
-import com.finnplay.vo.AccessTokenResponse;
+import com.finnplay.vo.ResponseResult;
 import com.finnplay.vo.UserLoginRequest;
 import com.finnplay.vo.UserRegisterRequest;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("/api/users/{email}")
-    public void update(@PathVariable String email, @RequestBody UserRegisterRequest request) {
-        userService.update(email, request);
+    @GetMapping("/{email}")
+    public ResponseResult get(@PathVariable String email) {
+        return ResponseResult.success(userService.findByEmail(email));
     }
 
-    @PostMapping("/api/register")
-    public void register(@RequestBody UserRegisterRequest request) {
-        userService.register(request);
+    @PutMapping("/{email}")
+    public ResponseResult update(@PathVariable String email, @RequestBody @Valid UserRegisterRequest request) {
+        return ResponseResult.success(userService.update(email, request));
     }
 
-    @PostMapping("/api/login")
-    public ResponseEntity<AccessTokenResponse> login(@RequestBody UserLoginRequest request) {
-        return ResponseEntity.ok(userService.login(request));
+
+    @PostMapping("/register")
+    public ResponseResult register(@RequestBody @Valid UserRegisterRequest request) {
+        return ResponseResult.success(userService.register(request));
     }
 
-    @PostMapping("/api/logout")
-    public void logout(HttpServletRequest request) {
-        userService.logout(request);
+    @PostMapping("/login")
+    public ResponseResult login(@RequestBody @Valid UserLoginRequest request) {
+        return ResponseResult.success(userService.login(request));
+    }
+
+    @PostMapping("/logout")
+    public ResponseResult logout(HttpServletRequest request) {
+        return ResponseResult.success(userService.logout(request));
     }
 
 

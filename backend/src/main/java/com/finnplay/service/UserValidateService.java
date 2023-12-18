@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserValidateService {
     private final UserRepository userRepository;
+
     public UserDetailsService userDetailsService() {
         return username ->
                 userRepository.findByEmail(username)
-                        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                        .orElseThrow(() -> new UsernameNotFoundException("email not exist"));
     }
-
 }
