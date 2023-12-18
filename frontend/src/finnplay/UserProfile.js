@@ -104,7 +104,6 @@ const UserProfile = ({ token, onLogout }) => {
   return (
     <div>
       <h2>User Profile</h2>
-
       <p>
         Email: <input type="text" placeholder="Email" value={email} readOnly />
       </p>
@@ -144,8 +143,7 @@ const UserProfile = ({ token, onLogout }) => {
           onChange={(e) => setBirthDay(e.target.value)}
         />
       </p>
-      <button onClick={handleSaveUser}>Save User</button>
-
+      <button onClick={handleSaveUser}>Save User</button>&nbsp;&nbsp;
       <button onClick={handleLogout}>Logout</button>
     </div>
   );

@@ -23,7 +23,15 @@ const App = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.post(`${API_URL}/users/logout`);
+      const response = await axios.post(
+        `${API_URL}/users/logout`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       let code = response.data.code;
       let msg = response.data.msg;
       if (code !== 1) {
